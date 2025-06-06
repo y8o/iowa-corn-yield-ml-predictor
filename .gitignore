@@ -1,6 +1,10 @@
 # Environment variables
 .env
 
+# Data directories
+data/raw/
+data/processed/
+
 # Python
 __pycache__/
 *.py[cod]
@@ -33,6 +37,9 @@ ENV/
 .vscode/
 *.swp
 *.swo
+
+# Jupyter Notebook
+.ipynb_checkpoints
 
 # OS
 .DS_Store
