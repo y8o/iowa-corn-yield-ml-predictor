@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Iowa Corn Yield Prediction - ML Results Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .sidebar {
+      width: 55%;
+      background-color: #f9f9f9;
+      padding: 20px;
+      overflow-y: scroll;
+      border-right: 1px solid #ccc;
+    }
+
+    .content {
+      width: 45%;
+      padding: 20px;
+      overflow-y: scroll;
+    }
+
+    h1, h2, h3 {
+      margin-top: 1em;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      border: 1px solid #ccc;
+      margin-bottom: 1em;
+    }
+
+    iframe {
+      width: 100%;
+      height: 480px;
+      border: none;
+      margin-bottom: 1em;
+    }
+
+    pre {
+      background-color: #efefef;
+      padding: 1em;
+      border-radius: 6px;
+      overflow-x: auto;
+    }
+
+    .section {
+      margin-bottom: 2em;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sidebar">
+    <h1>Corn Yield ML Results</h1>
+
+    <div class="section">
+      <h2>Feature Importance</h2>
+      <img src="results/feature_importance.png" alt="Feature Importance">
+    </div>
+
+    <div class="section">
+      <h2>Actual vs Predicted</h2>
+      <img src="results/actual_vs_predicted.png" alt="Actual vs Predicted Yields">
+    </div>
+
+    <div class="section">
+      <h2>Residuals Plot</h2>
+      <img src="results/residuals.png" alt="Residuals Plot">
+    </div>
+
+    <div class="section">
+      <h2>Latest Year Yield Map</h2>
+      <img src="results/iowa_yield_map.png" alt="Latest Year Yield Map">
+    </div>
+
+    <div class="section">
+      <h2>Average Yield Map</h2>
+      <img src="results/average_yield_map.png" alt="Average Yield Map">
+    </div>
+
+  </div>
+
+  <div class="content">
+    <h2>Project Summary</h2>
+    <p>
+      This machine learning project predicts county-level corn yields across Iowa using historical USDA yield data and climate variables such as GDD, precipitation, and temperature. A Random Forest Regressor was trained using aggregated yearly climate statistics and produced high accuracy.
+    </p>
+
+    <div class="section">
+      <h3>Model Performance</h3>
+      <pre>
+MAE: 1420932.26
+R² Score: 0.80
+      </pre>
+    </div>
+
+    <div class="section">
+      <h3>Feature Importances</h3>
+      <ul>
+        <li>Precipitation Sum: 0.2421</li>
+        <li>Temperature Max: 0.2400</li>
+        <li>Temperature Min: 0.2113</li>
+        <li>Temperature Mean: 0.1645</li>
+        <li>Growing Degree Days: 0.1420</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h3>Insights</h3>
+      <ul>
+        <li>The model performance indicates a reasonably good fit to the data.</li>
+        <li>Feature importances highlight the key climate drivers influencing corn yield in this model.</li>
+        <li>Visualizations help in understanding the model's predictions and identifying spatial patterns in yield.</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h3>Next Steps</h3>
+      <ul>
+        <li>Incorporate more detailed climate data (e.g., county-level, daily)</li>
+        <li>Include additional relevant features (e.g., soil data, planting dates)</li>
+        <li>Explore different machine learning models and techniques.</li>
+        <li>Develop more interactive visualizations.</li>
+      </ul>
+    </div>
+
+  </div>
+
+</body>
+</html>
