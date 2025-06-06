@@ -119,10 +119,7 @@ The project generates several visualizations saved in the `results/` directory:
 3. **Feature Importance**
    ![Feature Importance](results/feature_importance.png)
 
-4. **Latest Year (2023) Yield Map**
-   ![Latest Year Yield](results/iowa_yield_map.png)
-
-5. **Average Yield Map (2013-2023)**
+4. **Average Yield Map (2013-2023)**
    ![Average Yield](results/average_yield_map.png)
 
 ## Data Download Instructions
