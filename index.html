@@ -95,15 +95,20 @@
     </p>
 
     <div class="section">
-      <h3>Model Performance</h3>
-      <pre>
-MAE: 1,420,932.26
-R² Score: 0.80
-      </pre>
+        <h3>Data Description</h3>
+        <p>
+            The project utilizes historical county-level corn yield data from USDA NASS (2013-2023) and climate data, including Growing Degree Days, Precipitation, and Temperature metrics, sourced from the Iowa Environmental Mesonet (IEM) for the same period. Iowa county boundaries (2020 GeoJSON) are included for spatial visualization.
+        </p>
     </div>
 
     <div class="section">
-      <h3>Feature Importances</h3>
+      <h3>Key Results</h3>
+      <p>
+        The Random Forest Regression model achieved an **R² score of 0.80**, indicating that it explains 80% of the variance in Iowa corn yields based on the included climate features.
+      </p>
+      <p>
+        Feature importances highlight the key climate drivers influencing corn yield:
+      </p>
       <ul>
         <li>Precipitation Sum: 0.2421</li>
         <li>Temperature Max: 0.2400</li>
@@ -111,15 +116,9 @@ R² Score: 0.80
         <li>Temperature Mean: 0.1645</li>
         <li>Growing Degree Days: 0.1420</li>
       </ul>
-    </div>
-
-    <div class="section">
-      <h3>Insights</h3>
-      <ul>
-        <li>The model performance indicates a reasonably good fit to the data.</li>
-        <li>Feature importances highlight the key climate drivers influencing corn yield in this model.</li>
-        <li>Visualizations help in understanding the model's predictions and identifying spatial patterns in yield.</li>
-      </ul>
+      <p>
+        These importances reveal that while heat accumulation (GDD) is important, the amount of rainfall and the range of temperatures experienced during the growing season play a more significant role in determining yield outcomes in this dataset.
+      </p>
     </div>
 
     <div class="section">
@@ -130,6 +129,10 @@ R² Score: 0.80
         <li>Explore different machine learning models and techniques.</li>
         <li>Develop more interactive visualizations.</li>
       </ul>
+    </div>
+
+    <div class="section">
+        <h3><a href="https://github.com/y8o/iowa-corn-yield-ml-predictor" target="_blank">View Project on GitHub</a></h3>
     </div>
 
   </div>
