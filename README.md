@@ -1,29 +1,33 @@
 # Climate-Driven Corn Yield Prediction Model for Iowa Counties
-Machine learning model predicting corn yields across Iowa's 99 counties using 10+ years of climate data including growing degree days, precipitation, and extreme weather events. Achieves 85%+ accuracy in yield forecasting with feature importance analysis revealing key climate drivers.
+This project develops a machine learning model to predict corn yields across Iowa's 99 counties using 11 years of historical USDA yield data and climate data (2013-2023), including Growing Degree Days, Precipitation, and Temperature metrics. The model achieved an R² score of 0.80, with feature importance analysis revealing key climate drivers.
 
-# 🌽 Climate-Driven Corn Yield Prediction Model for Iowa Counties
+# Climate-Driven Corn Yield Prediction Model for Iowa Counties
 
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/release/python-380/)
 [![scikit-learn](https://img.shields.io/badge/scikit--learn-1.1+-orange.svg)](https://scikit-learn.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A machine learning model that predicts corn yields across Iowa's 99 counties using climate variables, achieving **89% accuracy** on test data. This project demonstrates the application of data science to agricultural sustainability and climate impact assessment.
+A machine learning model that predicts corn yields across Iowa's 99 counties using climate variables, achieving an **R² score of 0.80** on the full dataset. This project demonstrates the application of data science to agricultural sustainability and climate impact assessment.
 
-## 🎯 Project Overview
+## Project Overview
 
 This project builds a **Random Forest regression model** to predict corn yields based on:
 - **Growing Degree Days (GDD)**: Heat accumulation during growing season
-- **Precipitation patterns**: Total and distribution during April-September  
-- **Temperature extremes**: Heat stress and optimal growing conditions
-- **Drought indicators**: Consecutive dry days and water stress metrics
+- **Precipitation patterns**: Total during April-September  
+- **Temperature metrics**: Mean, max, and min temperatures
 
 **Key Results:**
-- 📊 **89% R² accuracy** on 2022-2023 test data
-- 🌡️ **GDD identified as top predictor** (0.342 importance score)
-- 🌧️ **Precipitation optimum**: 20-25 inches for maximum yields
-- 🔥 **Heat stress threshold**: 15+ days over 90°F significantly reduces yields
+- **R² score of 0.80**, indicating a good fit to the data.
+- Feature importances highlight the key climate drivers influencing corn yield:
+    - Precipitation Sum: 0.2421
+    - Temperature Max: 0.2400
+    - Temperature Min: 0.2113
+    - Temperature Mean: 0.1645
+    - Growing Degree Days: 0.1420
 
-## 🚀 Quick Start
+This R² score of 0.80 indicates that the model explains 80% of the variance in Iowa corn yields based on the included climate features. The feature importances reveal that precipitation and temperature extremes (max and min) were the most influential factors in the model's predictions, followed by the mean temperature and growing degree days. This suggests that while heat accumulation (GDD) is important, the amount of rainfall and the range of temperatures experienced during the growing season play a more significant role in determining yield outcomes in this dataset.
+
+## Quick Start
 
 ### Installation
 ```bash
@@ -33,172 +37,120 @@ pip install -r requirements.txt
 ```
 
 ### Run the Analysis
+Run the individual scripts in order:
 ```bash
-jupyter notebook notebooks/corn_yield_analysis.ipynb
+python src/data_collection.py
+python src/feature_engineering.py
+python src/modeling.py
+python src/visualization.py
+```
+Or view the results dashboard:
+```bash
+# Open the index.html file in your web browser
 ```
 
-Or run the standalone Python script:
-```bash
-python src/run_analysis.py
-```
-
-## 📁 Project Structure
+## Project Structure
 
 ```
 iowa-corn-yield-ml-predictor/
 ├── README.md
 ├── requirements.txt
-├── notebooks/
-│   └── corn_yield_analysis.ipynb     # Main analysis notebook
 ├── src/
 │   ├── data_collection.py            # Data generation utilities
 │   ├── feature_engineering.py        # Agricultural feature creation
 │   ├── modeling.py                   # ML model training
 │   └── visualization.py              # Plotting functions
-├── results/
-│   ├── model_performance.png         # Performance metrics
-│   ├── feature_importance.png        # Variable importance
-│   ├── climate_scenarios.png         # Scenario predictions
-│   └── iowa_yield_analysis.html      # Interactive results
+├── results/                          # Visualizations and metrics
+│   ├── actual_vs_predicted.png
+│   ├── residuals.png
+│   ├── feature_importance.png
+│   ├── iowa_yield_map.png
+│   └── average_yield_map.png
+├── models/                           # Trained model files
+│   └── trained_rf_model.pkl
 └── data/
-    ├── processed/
-    │   ├── iowa_corn_yields.csv      # County yield data
-    │   └── iowa_climate_data.csv     # Weather variables
-    └── raw/
-        └── data_sources.md           # Data source documentation
+    ├── raw/          # Raw data files
+    └── processed/    # Processed features
 ```
 
-## 🔬 Methodology
+## Methodology
 
 ### Data Sources
 - **Yield Data**: USDA NASS county-level corn yields (2013-2023)
-- **Climate Data**: NOAA weather stations and Iowa Environmental Mesonet
-- **Geographic Data**: US Census Bureau county boundaries
+- **Climate Data**: Iowa Environmental Mesonet (IEM) station data (2013-2023)
+- **Geographic Data**: US Census Bureau county boundaries (2020 GeoJSON)
 
 ### Feature Engineering
+Climate features calculated for the growing season (April-September):
 ```python
-# Key agricultural metrics calculated:
-- Growing Degree Days (base 50°F, cap 86°F)
-- Heat stress days (>90°F during grain fill)
-- Precipitation efficiency ratios
-- Drought stress indicators
-- Temperature optimization indices
+- Growing Degree Days (GDD)
+- Total Precipitation
+- Mean Temperature
+- Maximum Temperature
+- Minimum Temperature
 ```
 
 ### Model Architecture
-**Random Forest Regressor** with optimized hyperparameters:
-- 100 estimators, max depth 10
-- Temporal validation: trained on 2013-2021, tested on 2022-2023
-- Cross-validation: 5-fold CV with 87% ± 3% R²
+**Random Forest Regressor** trained on aggregated yearly data (2013-2023).
 
-## 📊 Key Findings
+## Results
 
-### Climate Impact Rankings
-1. **Growing Degree Days** (34.2% importance) - Primary yield driver
-2. **Drought Stress** (18.7% importance) - Consecutive dry days impact  
-3. **GDD Adequacy** (16.1% importance) - Optimal heat accumulation
-4. **Temperature Stress** (12.4% importance) - Heat damage during grain fill
-5. **Precipitation Total** (9.8% importance) - Water availability
+### Model Performance
+- **MAE:** 1,420,932.26
+- **R² Score:** 0.80
 
-### Scenario Analysis
-| Climate Scenario | Predicted Yield | Yield Impact |
-|-----------------|----------------|--------------|
-| Optimal Conditions | 195 bu/acre | Baseline |
-| Drought Year | 168 bu/acre | -27 bu/acre |
-| Heat Stress | 171 bu/acre | -24 bu/acre |
-| Excessive Rain | 188 bu/acre | -7 bu/acre |
-| Cool Season | 179 bu/acre | -16 bu/acre |
+### Feature Importances
+The model identified the following feature importances:
+1. Precipitation Sum: 0.2421
+2. Temperature Max: 0.2400
+3. Temperature Min: 0.2113
+4. Temperature Mean: 0.1645
+5. Growing Degree Days: 0.1420
 
-### Geographic Insights
-- **Top performers**: North-central Iowa counties (optimal GDD zone)
-- **Most variable**: Southern counties (higher heat/drought stress)
-- **Climate sensitivity**: 1°C warming = ~8 bu/acre yield loss
+### Visualizations
+The project generates several visualizations saved in the `results/` directory:
 
-## 🌱 Agricultural Applications
+1. **Actual vs Predicted Yield**
+   ![Actual vs Predicted](results/actual_vs_predicted.png)
 
-### Precision Agriculture
-- **Site-specific recommendations** based on local climate patterns
-- **Risk assessment** for crop insurance and financial planning
-- **Optimal planting dates** using GDD accumulation forecasts
+2. **Residuals Plot**
+   ![Residuals](results/residuals.png)
 
-### Climate Adaptation
-- **Variety selection** for changing temperature regimes
-- **Irrigation planning** based on precipitation forecasts  
-- **Carbon sequestration potential** through regenerative practices
+3. **Feature Importance**
+   ![Feature Importance](results/feature_importance.png)
 
-### Supply Chain Planning
-- **Yield forecasting** for commodity markets
-- **Regional production estimates** for logistics planning
-- **Early warning systems** for weather-related yield losses
+4. **Latest Year (2023) Yield Map**
+   ![Latest Year Yield](results/iowa_yield_map.png)
 
-## 🔧 Technical Features
+5. **Average Yield Map (2013-2023)**
+   ![Average Yield](results/average_yield_map.png)
 
-### Data Pipeline
-- Automated data collection from USDA NASS API
-- Quality control and outlier detection
-- Missing value imputation using regional averages
+## Data Download Instructions
 
-### Model Validation
-- Temporal cross-validation (walk-forward)
-- Feature importance with permutation testing
-- Residual analysis and model diagnostics
+### USDA Data
+1. Visit [USDA Quick Stats](https://quickstats.nass.usda.gov/)
+2. Register for an API key.
+3. Add the API key to a `.env` file in the project root: `USDA_API_KEY=your_api_key_here`
 
-### Visualization Suite
-- Interactive climate-yield relationships (Plotly)
-- County-level prediction maps (Folium)
-- Scenario comparison dashboards
-- Model performance diagnostics
+### Climate Data
+The climate data is automatically downloaded from IEM when running `src/data_collection.py`.
 
-## 📈 Future Enhancements
+### County Boundaries
+The county boundaries GeoJSON is automatically downloaded from the Census Bureau when running `src/data_collection.py`.
 
-### Data Integration
-- [ ] **Soil type variables** (organic matter, drainage class)
-- [ ] **Management practices** (tillage, fertilizer timing)
-- [ ] **Satellite imagery** (NDVI, LAI during growing season)
-- [ ] **Real-time weather APIs** for operational forecasting
+## Future Enhancements
 
-### Model Improvements
-- [ ] **Deep learning models** (LSTM for temporal patterns)
-- [ ] **Ensemble methods** (stacking multiple algorithms)
-- [ ] **Spatial modeling** (accounting for geographic autocorrelation)
-- [ ] **Uncertainty quantification** (prediction intervals)
+- Incorporate more detailed climate data (e.g., county-level, daily).
+- Include additional relevant features (e.g., soil data, planting dates).
+- Explore different machine learning models and techniques.
+- Develop more interactive visualizations.
 
-### Business Applications
-- [ ] **Mobile app** for farmers and agronomists
-- [ ] **API service** for agricultural software integration
-- [ ] **County extension** reports with recommendations
-- [ ] **Climate risk** assessment tools
-
-## 📚 References & Data Sources
-
-- USDA National Agricultural Statistics Service (NASS)
-- NOAA National Centers for Environmental Information
-- Iowa Environmental Mesonet, Iowa State University
-- Hatfield, J.L. et al. (2011). Climate impacts on agriculture: implications for crop production. *Agronomy Journal*, 103(2), 351-370.
-
-## 🤝 Contributing
-
-Contributions welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
-### Areas for Contribution
-- Additional climate variables (soil temperature, humidity)
-- Alternative ML algorithms (XGBoost, neural networks)
-- Visualization improvements (dashboards, maps)
-- Documentation and tutorials
-
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 👤 Author
+## Author
 
-**Your Name**
-- 🎓 M.S. Data Science, Applied Mathematics & Biological Sciences
-- 💼 Passionate about climate-smart agriculture and sustainability
-- 📧 Email: your.email@example.com
-- 🔗 LinkedIn: [your-profile](https://linkedin.com/in/your-profile)
-- 🐙 GitHub: [@yourusername](https://github.com/yourusername)
+[Oscar Babin]
 
 ---
-
-*This project demonstrates the application of machine learning to agricultural sustainability challenges, supporting climate-resilient farming systems and data-driven decision making in agriculture.*
